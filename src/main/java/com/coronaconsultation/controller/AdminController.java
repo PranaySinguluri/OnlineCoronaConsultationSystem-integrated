@@ -278,6 +278,8 @@ public class AdminController {
 		}
 		services.setIPD(false);
 		services.setOPD(true);
+		
+		
 		if(patientReport==null) {
 			patientReport=new PatientReport();
 			patientReport.setPatientReportId(patientReportId);
