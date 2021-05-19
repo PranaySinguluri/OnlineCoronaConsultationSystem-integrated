@@ -23,12 +23,6 @@ public class ServicesController {
 	ServiceMasterImpl serviceMasterImpl;
 	@PostMapping("/")
 	public ResponseEntity<String> AddNewServices(@RequestBody Services services){
-		if(services.isCondition()) {
-			services.setServiceType(ServiceType.IPD);
-		}
-		else {
-			services.setServiceType(ServiceType.OPD);
-		}
 		serviceMasterImpl.AddService(services);
 		return new ResponseEntity<>("Service Added",HttpStatus.OK);
 		

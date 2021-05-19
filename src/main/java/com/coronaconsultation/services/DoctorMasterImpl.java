@@ -14,6 +14,9 @@ import com.coronaconsultation.entities.Gender;
 import com.coronaconsultation.entities.Patient;
 import com.coronaconsultation.entities.PatientReport;
 import com.coronaconsultation.entities.Treatment;
+import com.coronaconsultation.exception.DoctorNotFoundException;
+import com.coronaconsultation.exception.EmployeeNotFoundException;
+import com.coronaconsultation.exception.PatientNotFoundException;
 import com.coronaconsultation.repository.DischargePatientsRepository;
 import com.coronaconsultation.repository.DoctorReportRepository;
 import com.coronaconsultation.repository.DoctorRepository;
@@ -30,18 +33,20 @@ PatientRepository patientRepository;
 @Autowired
 DischargePatientsRepository dischargePatientsRepository;
 @Override
-public boolean createDoctor(Doctor doctor) {
+public boolean createDoctor(Doctor doctor) throws DoctorNotFoundException {
 	// TODO Auto-generated method stub
 	if(doctor!=null)
 	{
 		doctorRepository.save(doctor);
 		return true;
 	}
-	return false;
+	else {
+		throw new DoctorNotFoundException("Doctor Exists already!!");
+	}
 }
 
 @Override
-public boolean updateDoctor(int id,Doctor doctor) {
+public boolean updateDoctor(int id,Doctor doctor) throws DoctorNotFoundException {
 	Doctor doc = doctorRepository.findById(id).get();
 
 	if (doc!=null) {
@@ -52,43 +57,51 @@ public boolean updateDoctor(int id,Doctor doctor) {
 	}
 
 	
-	return false;
+	else {
+		throw new DoctorNotFoundException("Doctor Not Found!!");
+	}
 }
 
 
 @Override
-public boolean deleteDoctor(int id) {
+public boolean deleteDoctor(int id) throws DoctorNotFoundException {
 	// TODO Auto-generated method stub
 	Doctor doc =doctorRepository.findById(id).get();
 	if(doc!=null) {
 		doctorRepository.deleteById(id);;
 		return true;
 	}
-	return false;
+	else {
+		throw new DoctorNotFoundException("Doctor Not Found!!");
+	}
 }
 
 @Override
-public Doctor getDoctor(int id) {
+public Doctor getDoctor(int id) throws DoctorNotFoundException {
 	// TODO Auto-generated method stub
 	Doctor doc= doctorRepository.findById(id).get();
 	if(doc!=null) {
 		return doc;
 	}
-	return null;
+	else {
+		throw new DoctorNotFoundException("Doctor Not Found!!");
+	}
 }
 
 @Override
-public List<Doctor> getAllDoctors() {
+public List<Doctor> getAllDoctors() throws DoctorNotFoundException {
 	// TODO Auto-generated method stub
 	   List<Doctor> doctor= doctorRepository.findAll();
 	   if(doctor!=null) {
 		   return doctor;
 	   }
-	return null;
+	   else {
+			throw new DoctorNotFoundException("Doctor Not Found!!");
+		}
 }
 
 @Override
-public boolean updateName(int id, String name) {
+public boolean updateName(int id, String name) throws DoctorNotFoundException {
 	// TODO Auto-generated method stub
 	Doctor doc = doctorRepository.findById(id).get();
 
@@ -98,11 +111,13 @@ public boolean updateName(int id, String name) {
 		doctorRepository.save(doc);
 		return true;
 	}
-	return false;
+	else {
+		throw new DoctorNotFoundException("Doctor Not Found!!");
+	}
 }
 
 @Override
-public boolean updateGender(int id, Gender gender) {
+public boolean updateGender(int id, Gender gender) throws DoctorNotFoundException {
 	// TODO Auto-generated method stub
 	Doctor doc = doctorRepository.findById(id).get();
 
@@ -113,11 +128,13 @@ public boolean updateGender(int id, Gender gender) {
 		return true;
 	}
 	
-	return false;
+	else {
+		throw new DoctorNotFoundException("Doctor Not Found!!");
+	}
 }
 
 @Override
-public boolean updateSpecialization(int id, String specialization) {
+public boolean updateSpecialization(int id, String specialization) throws DoctorNotFoundException {
 	// TODO Auto-generated method stub
 	Doctor doc = doctorRepository.findById(id).get();
 
@@ -127,11 +144,13 @@ public boolean updateSpecialization(int id, String specialization) {
 		doctorRepository.save(doc);
 		return true;
 	}
-	return false;
+	else {
+		throw new DoctorNotFoundException("Doctor Not Found!!");
+	}
 }
 
 @Override
-public boolean updateEmail(int id, String email) {
+public boolean updateEmail(int id, String email) throws DoctorNotFoundException {
 	// TODO Auto-generated method stub
 	Doctor doc = doctorRepository.findById(id).get();
 
@@ -142,11 +161,13 @@ public boolean updateEmail(int id, String email) {
 	}
 	
 	
-	return false;
+	else {
+		throw new DoctorNotFoundException("Doctor Not Found!!");
+	}
 }
 
 @Override
-public boolean updateMobile(int id, String mobile) {
+public boolean updateMobile(int id, String mobile) throws DoctorNotFoundException {
 	// TODO Auto-generated method stub
 	Doctor doc = doctorRepository.findById(id).get();
 
@@ -158,7 +179,9 @@ public boolean updateMobile(int id, String mobile) {
 	}
 	
 	
-	return false;
+	else {
+		throw new DoctorNotFoundException("Doctor Not Found!!");
+	}
 }
 
 
@@ -166,7 +189,11 @@ public boolean updateMobile(int id, String mobile) {
 public boolean createDoctorReport(int id,DoctorReport doctorReport) {
 	// TODO Auto-generated method stub
 	Patient patient = patientRepository.findById(id).get();
-	if(patient!=null) {
+	if(patient==null){
+		throw new PatientNotFoundException("patient not found!!");
+	} 
+	else
+	{
 		doctorReportRepository.save(doctorReport);
 		patient.setDoctorReport(doctorReport);
 		patientRepository.save(patient);
@@ -174,7 +201,7 @@ public boolean createDoctorReport(int id,DoctorReport doctorReport) {
 	}
 	// TODO Auto-generated method stub
 	
-	return false;
+
 }
 
 
@@ -182,30 +209,37 @@ public boolean createDoctorReport(int id,DoctorReport doctorReport) {
 public boolean AddPatientReport(int id, PatientReport patientReport) {
 	// TODO Auto-generated method stub
 	Patient patient= patientRepository.findById(id).get();
-	if(patient!=null) {
+	if(patient==null){
+		throw new PatientNotFoundException("patient not found!!");
+	} 
+	else {
 		patient.setPatientReport(patientReport);
 		return true;
 	}
-	return false;
 }
 
 @Override
 public boolean AddTreatment(int id,Treatment treatment) {
 	// TODO Auto-generated method stub
 	Patient patient= patientRepository.findById(id).get();
-	if(patient!=null) {
+	if(patient==null){
+		throw new PatientNotFoundException("patient not found!!");
+	} 
+	else {
 		patient.setTreatment(treatment.getTreatement()+"\nBy "+treatment.getDoctor().getName());
 		return true;
 	}
 	
-	return false;
 }
 
 @Override
 public boolean DischargePatient(int id, String dischargeSummary) {
 	Patient patient= patientRepository.findById(id).get();
 	DischargedPatients dischargedPatients= new DischargedPatients();
-	if(patient!=null) {
+	if(patient==null){
+		throw new PatientNotFoundException("patient not found!!");
+	} 
+	else {
 		dischargedPatients.setPatient(patient);
 		dischargedPatients.setDischargeSummary(dischargeSummary);
 		dischargedPatients.setDoctor(patient.getDoctorReport().getDoctor());
@@ -213,27 +247,30 @@ public boolean DischargePatient(int id, String dischargeSummary) {
 	}
 	// TODO Auto-generated method stub
 	
-	return false;
 }
 
 @Override
 public PatientReport ViewPatientReport(int id) {
 	// TODO Auto-generated method stub
 	Patient patient= patientRepository.findById(id).get();
-	if(patient!=null) {
+	if(patient==null){
+		throw new PatientNotFoundException("patient not found!!");
+	} 
+	else {
 		return patient.getPatientReport();
 	}
-	return null;
 }
 
 @Override
 public DoctorReport ViewDoctorReport(int id) {
 	// TODO Auto-generated method stub
 	Patient patient= patientRepository.findById(id).get();
-	if(patient!=null) {
+	if(patient==null){
+		throw new PatientNotFoundException("patient not found!!");
+	} 
+	else {
 		return patient.getDoctorReport();
 	}
-	return null;
 }
 
 @Override
@@ -251,12 +288,14 @@ public String ViewTreatment(int id) {
 public String ViewDischargeSummary(int id) {
 	// TODO Auto-generated method stub
 	Patient patient= patientRepository.findById(id).get();
-	if(patient!=null) {
+	if(patient==null){
+		throw new PatientNotFoundException("patient not found!!");
+	} 
+	else {
 		String summary=dischargePatientsRepository.findById(id).get().getDischargeSummary();
 		String message=summary+"\nBy "+dischargePatientsRepository.findById(id).get().getDoctor().getName();
 		return message;
 	}
-	return null;
 }
 
 }
