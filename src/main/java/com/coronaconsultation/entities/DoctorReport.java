@@ -21,14 +21,14 @@ private int docReportId;
 @Column(name = "description", length = 15)
 private String description;
 
-@Column(name = "dateOfReport", length = 15)
+@Column(name = "dateOfReport", nullable = true)
 private LocalDate dateOfReport;
 
 
 @OneToOne
-@JoinColumn(name = "patient_id", referencedColumnName = "patientid")
+@JoinColumn(name = "patient_id",  nullable = true, referencedColumnName = "patientid")
 private Patient patient;
 @OneToOne
-@JoinColumn(name = "doctor_id", referencedColumnName = "id")
+@JoinColumn(name = "doctor_id",  nullable = true, referencedColumnName = "id")
 private Doctor doctor;
 }

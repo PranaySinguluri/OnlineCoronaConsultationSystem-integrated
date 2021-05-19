@@ -18,14 +18,14 @@ public class WardReport {
 @Id
 @GeneratedValue(strategy = GenerationType.AUTO)
 private int wardReportId;
-@Column(name = "description", length = 15)
+@Column(name = "description", length = 50)
 private String description;
 
-@Column(name = "dateOfReport", length = 15)
+@Column(name = "dateOfReport",  nullable = true)
 private LocalDate dateOfReport;
 
 
 @OneToOne
-@JoinColumn(name = "ward_id", referencedColumnName = "ward_id")
+//@JoinColumn(name = "ward_id", referencedColumnName = "ward_id")
 private Ward ward;
 }
