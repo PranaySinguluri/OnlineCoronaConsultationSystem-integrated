@@ -1,6 +1,8 @@
 package com.coronaconsultation.entities;
 
 import java.time.LocalDate;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,20 +17,20 @@ import lombok.Data;
 @Entity
 
 @Data
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "medicine_id", scope = Integer.class)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "medicineId", scope = Integer.class)
 public class Medicine {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	
-		private int medicine_id;
+	private int medicineId;
 
 	@Column(nullable= false)
-	private String name;
+	private String medicineName;
 	
 	
 	@Column(nullable= false)
-
+ 
 	private int price;
 	@Column(nullable= false)
 
@@ -40,8 +42,30 @@ public class Medicine {
 	private LocalDate expiryDate;
 	
 	@Column(nullable= false)
-	private int stockLeft;
+	private int medicineStock;
 
+	public Medicine(int medicineId, String medicineName, int price, LocalDate manufactureDate, LocalDate expiryDate,
+			int medicineStock) {
+		super();
+		this.medicineId = medicineId;
+		this.medicineName = medicineName;
+		this.price = price;
+		this.manufactureDate = manufactureDate;
+		this.expiryDate = expiryDate;
+		this.medicineStock = medicineStock;
+	}
+
+	public Medicine(int medicineId, String name, int price) {
+		super();
+		this.medicineId = medicineId;
+		this.medicineName = medicineName;
+		this.price = price;
+	}
+
+	public Medicine() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	
 	

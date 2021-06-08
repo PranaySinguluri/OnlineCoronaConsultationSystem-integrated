@@ -37,7 +37,7 @@ public class PatientReport {
 		
 		 @OneToOne
 		 @JoinColumn(name = "medical_report_id",nullable = true, referencedColumnName = "id")
-		 private MedicalReport medicalReport;	
+		 private MedicineReport medicalReport;	
 	
 	
 
