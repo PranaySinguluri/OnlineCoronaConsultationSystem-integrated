@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -23,6 +24,7 @@ public class Medicine {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	
+	
 	private int medicineId;
 
 	@Column(nullable= false)
@@ -32,16 +34,20 @@ public class Medicine {
 	@Column(nullable= false)
  
 	private int price;
-	@Column(nullable= false)
+	
 
+	@Column(name = "manufactureDate", length = 15)
+	@NotNull(message = "manufactureDate should not be Empty")
 	private LocalDate manufactureDate;
 	
-	@Column(nullable= false)
 
-	
+
+	@Column(name = "expiryDate", length = 15)
+	@NotNull(message = "expiryDate should not be Empty")
 	private LocalDate expiryDate;
 	
 	@Column(nullable= false)
+	
 	private int medicineStock;
 
 	public Medicine(int medicineId, String medicineName, int price, LocalDate manufactureDate, LocalDate expiryDate,
