@@ -169,7 +169,7 @@ public ResponseEntity<String> createEmployee(@RequestBody Employee employee) {
 			
 			employees = employeeMasterImpl.getAllEmployees();
 			if(employees!=null) {
-				return new ResponseEntity<>(employees, HttpStatus.NOT_FOUND);
+				return new ResponseEntity<>(employees, HttpStatus.OK);
 			}
 		} catch (EmployeeNotFoundException e) {
 			// TODO Auto-generated catch block

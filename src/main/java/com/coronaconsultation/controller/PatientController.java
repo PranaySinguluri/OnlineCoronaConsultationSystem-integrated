@@ -1,6 +1,9 @@
 package com.coronaconsultation.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,12 +12,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.coronaconsultation.entities.Doctor;
 import com.coronaconsultation.entities.DoctorReport;
-import com.coronaconsultation.entities.Patient;
 import com.coronaconsultation.entities.PatientReport;
 import com.coronaconsultation.entities.PatientRequests;
+import com.coronaconsultation.entities.Treatment;
 import com.coronaconsultation.services.PatientRequestServicesImpl;
 import com.coronaconsultation.services.PatientServicesImpl;
 
@@ -67,8 +68,8 @@ public class PatientController {
 	
 	
 	@GetMapping("/ViewTreatment/{id}")
-	public ResponseEntity<String> ViewTreatment(@PathVariable int id){
-		String treatment= patientServicesImpl.ViewTreatment(id);
+	public ResponseEntity<List<Treatment>> ViewTreatment(@PathVariable int id){
+		List<Treatment> treatment= patientServicesImpl.ViewTreatment(id);
 		if(treatment!=null) {
 			return new ResponseEntity<>(treatment,HttpStatus.FOUND);
 		}

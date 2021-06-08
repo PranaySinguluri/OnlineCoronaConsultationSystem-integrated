@@ -153,7 +153,7 @@ public class AdminController {
 		try {
 			doc = doctorMasterImpl.getDoctor(id);
 			if (doc != null) {
-				return new ResponseEntity<>(doc, HttpStatus.NOT_FOUND);
+				return new ResponseEntity<>(doc, HttpStatus.OK);
 			}
 		} catch (DoctorNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -170,7 +170,7 @@ public class AdminController {
 		try {
 			doc = doctorMasterImpl.getAllDoctors();
 			if (doc != null) {
-				return new ResponseEntity<>(doc, HttpStatus.NOT_FOUND);
+				return new ResponseEntity<>(doc, HttpStatus.OK);
 			}
 			
 		} catch (DoctorNotFoundException e) {
@@ -266,6 +266,7 @@ public class AdminController {
 	@PutMapping("/updateEmployee/updateDesignation/{id}/")
 	public ResponseEntity<String> updateEmployeeDesignation(@PathVariable int id, @RequestBody String designation) {
 		try {
+			System.out.println("\n\nDesignation Was:: "+designation+"\n\n\n");
 			if (employeeMasterImpl.updateDesignation(id, designation)) {
 				return new ResponseEntity<>("Designation Updated!!", HttpStatus.OK);
 			}
@@ -325,7 +326,7 @@ public class AdminController {
 		try {
 			employees = employeeMasterImpl.getAllEmployees();
 			if (employees != null) {
-				return new ResponseEntity<>(employees, HttpStatus.NOT_FOUND);
+				return new ResponseEntity<>(employees, HttpStatus.OK);
 			}
 		} catch (EmployeeNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -353,7 +354,7 @@ public class AdminController {
 	public ResponseEntity<PatientRequests> getPatientRequest(@PathVariable int id) {
 		PatientRequests patientRequests = patientRequestServicesImpl.getPatientRequestById(id);
 		if (patientRequests != null) {
-			return new ResponseEntity<>(patientRequests, HttpStatus.FOUND);
+			return new ResponseEntity<>(patientRequests, HttpStatus.OK);
 		}
 		return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 	}
@@ -363,7 +364,7 @@ public class AdminController {
 	public ResponseEntity<List<PatientRequests>> getAllRequest() {
 		List<PatientRequests> patientRequests = patientRequestServicesImpl.getAllRequests();
 		if (patientRequests != null) {
-			return new ResponseEntity<>(patientRequests, HttpStatus.FOUND);
+			return new ResponseEntity<>(patientRequests, HttpStatus.OK);
 		}
 		return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 	}
@@ -371,31 +372,34 @@ public class AdminController {
 	@Autowired
 	PatientReportRepository patientReportRepository;
 
-	@Autowired
-	DoctorReportRepository doctorReportRepository;
-	@Autowired 
-	ServicesRepository servicesRepository;
-	@Autowired 
-	FeedbackRepository feedbackRepository;
+	//@Autowired
+	//DoctorReportRepository doctorReportRepository;
+	//@Autowired 
+	//ServicesRepository servicesRepository;
+	//@Autowired 
+	//FeedbackRepository feedbackRepository;
 
-	@GetMapping("/Accept Patient/{id}/")
+	@GetMapping("/Accept Patient/{id}/ServiceId/{ServiceId}")
 
-	public ResponseEntity<String> AcceptRequest(@PathVariable int id, @RequestBody ServiceType servicesType, @RequestBody String additionalServices,
-			@RequestBody int patientReportId, @RequestBody int doctorReportId, @RequestBody int feedId) {
+	public ResponseEntity<String> AcceptRequest(@PathVariable int id, @PathVariable int ServiceId, @RequestBody String additionalServices) {
 		PatientRequests patientRequests =patientRequestServicesImpl.getPatientRequestById(id);
-		PatientReport patientReport=patientReportRepository.findById(patientReportId).get();
-		DoctorReport doctorReport =doctorReportRepository.findById(doctorReportId).get();
-		Feedback feedback= feedbackRepository.findById(feedId).get();
+		//PatientReport patientReport=patientReportRepository.findById(patientReportId).get();
+		//DoctorReport doctorReport =doctorReportRepository.findById(doctorReportId).get();
+		//Feedback feedback= feedbackRepository.findById(feedId).get();
 		Services services=new Services();
+		services.setId(ServiceId);
 		services.setAdditionalServices(additionalServices);
-		if(servicesType==ServiceType.IPD) {
+		if(patientRequests.getServiceType().equals(ServiceType.IPD)) {
 			services.setIPD(true);
 			services.setOPD(false);
 		}
-		services.setIPD(false);
-		services.setOPD(true);
+		else {
+			services.setIPD(false);
+			services.setOPD(true);
+		}
 		
 		
+		/*
 		if(patientReport==null) {
 			patientReport=new PatientReport();
 			patientReport.setPatientReportId(patientReportId);
@@ -409,12 +413,12 @@ public class AdminController {
 			feedback= new Feedback();
 			feedback.setId(feedId);
 		}
-		
-		if((patientReport!=null)&&(doctorReport !=null)&&(feedback!=null)) {
-			if (patientServicesImpl.AcceptPatient(patientRequests, services, patientReport, doctorReport, feedback)) {
+		*/
+		//if((patientReport!=null)&&(doctorReport !=null)&&(feedback!=null)) {
+			if (patientServicesImpl.AcceptPatient(patientRequests, services)) {
 				return new ResponseEntity<>("Request Accepted!!", HttpStatus.OK);
 				
-			}
+			//}
 		}
 		
 		//PatientReport patientReport=patientReportRepository.findById(patientReportId).get();

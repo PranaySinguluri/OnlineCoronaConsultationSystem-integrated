@@ -26,6 +26,6 @@ private LocalDate dateOfReport;
 
 
 @OneToOne
-//@JoinColumn(name = "ward_id", referencedColumnName = "ward_id")
+@JoinColumn(name = "ward_id", referencedColumnName = "ward_id")
 private Ward ward;
 }

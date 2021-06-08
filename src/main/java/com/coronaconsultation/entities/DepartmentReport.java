@@ -18,6 +18,7 @@ public class DepartmentReport {
 	private String dreport_name;
 	private String dreport_Description;
 	@OneToOne
+	@JoinColumn(name = "department_id", nullable = true, referencedColumnName = "id")
 	private Department department;
 
 }

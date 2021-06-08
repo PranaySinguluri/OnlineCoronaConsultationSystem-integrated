@@ -24,13 +24,13 @@ private ServicesRepository servicesRepository;
 
 void createServicesTest() throws Exception {
 		Patient patient = new Patient();
-		patient.setPatientid(1);
+		patient.setPatientId(1);
 		patient.setGender(Gender.MALE);
 		patient.setEmail("neetu@gmail.com");
 		patient.setLocation("Delhi");
 		patient.setMobile("7896541230");
 		patient.setName("Neetu Singh");
-		patient.setTreatment(null);
+		patient.setTreatement(null);
 		patient.setDoctorReport(null);
 		patient.setFeedback(null);
 		patient.setPatientReport(null);

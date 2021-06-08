@@ -1,6 +1,7 @@
 package com.coronaconsultation.entities;
 import java.time.LocalDate;
 
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,8 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-
-import com.coronaconsultation.entities.Patient;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -23,7 +22,7 @@ import lombok.Data;
 public class MedicineReport {
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(unique= true)
 	private  Integer  medicineReportId;
 	
@@ -31,7 +30,7 @@ public class MedicineReport {
 	private String description;
 
 	@OneToOne(cascade = CascadeType.ALL)
-	//@JoinColumn(name = "p_id")
+	@JoinColumn(name = "patient_id", referencedColumnName = "patientId")
 	private Patient patient;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
@@ -39,7 +38,7 @@ public class MedicineReport {
 	private Medicine medicine;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "doctorId")
+	@JoinColumn(name = "doctor_id", referencedColumnName = "id")
 	private Doctor doc;
 }
  

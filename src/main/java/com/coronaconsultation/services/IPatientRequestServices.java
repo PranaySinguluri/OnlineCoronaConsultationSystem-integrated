@@ -16,6 +16,7 @@ public interface IPatientRequestServices {
     //public PatientRequests findByEmail(String empName);
 	
 	public boolean deleteAllRequests();
-	public boolean AcceptRequestById(int id);
+	//public boolean AcceptRequestById(int id);
+	//public boolean AcceptRequestById(PatientRequests patientRequests, int ServiceId, String additionalServices);
 
 }

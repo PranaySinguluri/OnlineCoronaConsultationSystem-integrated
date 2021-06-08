@@ -1,8 +1,5 @@
 package com.coronaconsultation.entities;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,7 +24,6 @@ private String mobile;
 private Gender gender;
 private String address;
 @ManyToOne
-@JoinColumn(name = "department_id", nullable = true, referencedColumnName = "id"
-)
+@JoinColumn(name = "department_id", nullable = true, referencedColumnName = "id")
 private Department department;
 }

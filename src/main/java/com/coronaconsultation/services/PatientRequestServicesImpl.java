@@ -66,43 +66,7 @@ public class PatientRequestServicesImpl implements IPatientRequestServices{
 		patientRequestRepository.deleteAll();
 		return false;
 	}
-	
-	
-	@Override 
-	public boolean AcceptRequestById(int id) {
-		PatientRequests patientRequests= patientRequestRepository.findById(id).get();
-		Services services= new Services();
-		Patient patient= new Patient();
-		if(patientRequests!=null) {
-			patient.setEmail(patientRequests.getEmail());
-			patient.setName(patientRequests.getName());
-			patient.setGender(patientRequests.getGender());
-			patient.setLocation(patientRequests.getLocation());
-			patient.setMobile(patientRequests.getMobile());
-			if(patientRequests.getServiceType().equals(ServiceType.IPD)) {
-				services.setIPD(true);
-				services.setOPD(false);
-				patient.setService(services);
-				services.setPatient(patient);
-				patientRepository.save(patient);
-				servicesRepository.save(services);
-				return true;
-			}
-			else {
-				services.setIPD(false);
-				services.setOPD(true);
-				patient.setService(services);;
-				services.setPatient(patient);
-				
-				patientRepository.save(patient);
-				servicesRepository.save(services);
-				return true;
-			}
-				
-			
-		}
-		return false;
-	} 
+	 
 	
 
 }
