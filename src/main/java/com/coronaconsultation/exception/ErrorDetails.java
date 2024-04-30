@@ -8,4 +8,5 @@ import lombok.Data;
 public class ErrorDetails {
 private String ErrorMessage;
 private LocalDateTime TimeStamp;
+
 }
