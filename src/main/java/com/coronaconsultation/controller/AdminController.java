@@ -42,7 +42,7 @@ public class AdminController {
 	@Autowired
 	private DoctorMasterImpl doctorMasterImpl;
 
-	@PostMapping("/CreateDoctor/")
+	@PostMapping("/CreateDoctor")
 	public ResponseEntity<String> createDoctor(@RequestBody Doctor doctor) {
 		try {
 			doctorMasterImpl.createDoctor(doctor);
