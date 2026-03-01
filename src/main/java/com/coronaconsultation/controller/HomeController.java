@@ -1,5 +1,6 @@
 package com.coronaconsultation.controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -7,7 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class HomeController {
 
     @GetMapping("/")
-    public String home() {
-        return "welcome";
+    public String home(HttpSession session) {
+
+        return "welcome " + session.getId();
     }
 }
